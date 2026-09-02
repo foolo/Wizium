@@ -51,7 +51,7 @@ def draw (wiz):
 # ============================================================================
     lines = wiz.grid_read ()
     for l in lines:
-        print (''.join ([s + '   ' for s in l]))
+        print (''.join ([s + ' ' for s in l]))
 
 
 # ============================================================================
@@ -74,6 +74,7 @@ def set_grid_1 (wiz):
 
     wiz.grid_set_box (5, 1, 'BLACK')
     wiz.grid_set_box (5, 9, 'BLACK')
+    wiz.grid_set_box (0, 0, 'BLACK')
 
 
 # ============================================================================
@@ -246,12 +247,43 @@ def example_4():
     wiz.grid_set_size(10, 10)
     solve(wiz, max_black=25, heuristic_level=2, black_mode='DIAG')
 
+
+
+def example_5():
+    dictpath = "/home/olof/Dropbox/projekt/korsord_ordlistor/ss100_utf8_uppercase_filtered_no_foreign.txt"
+    dictionary = sorted([line.strip() for line in open(dictpath, 'r', encoding='utf-8') if line.strip()])
+    ## print first 10 words
+    print(f"First 10 words in dictionary: {dictionary[:10]}")
+
+
+    
+    alphabet = "".join(sorted(functools.reduce(operator.or_, map(set, dictionary))))
+
+    print(f"Dictionary with {len(dictionary)} words uses alphabet '{alphabet}'")
+
+    # Create a Wizium instance
+    wiz = Wizium (os.path.join (os.getcwd (), PATH),
+                  alphabet=alphabet)
+
+    # Load dictionary
+    wiz.dic_clear()
+    n = wiz.dic_add_entries(dictionary)
+
+    #set_grid_1 (wiz)
+    wiz.grid_set_size(20, 10)
+    wiz.grid_set_box (0, 0, 'BLACK')
+    wiz.grid_set_box (0, 1, 'BLACK')
+    wiz.grid_set_box (1, 0, 'BLACK')
+    solve(wiz, max_black=25, heuristic_level=2)
+
+
+
 # ============================================================================
 """Main"""
 # ============================================================================
 
 # -->  C H O O S E  <--
-EXAMPLE = 4
+EXAMPLE = 5
 
 
 # Example with fixed pattern
@@ -268,5 +300,7 @@ elif EXAMPLE == 3:
 # Use foreign alphabet
 elif EXAMPLE == 4:
     example_4()
-
+# Use foreign alphabet and large dictionary
+elif EXAMPLE == 5:
+    example_5()
 exit ()
