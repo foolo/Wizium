@@ -44,14 +44,24 @@ DICO_PATH = './../../Dictionaries/Fr_Simple.txt'
 
 
 # ============================================================================
-def draw (wiz):
+def draw (wiz: Wizium):
     """Draw the grid content, with a very simple formating
 
     wiz     Wizium instance"""
 # ============================================================================
     lines = wiz.grid_read ()
+    print (f"type(lines): {type(lines)}")
     for l in lines:
-        print (''.join ([s + ' ' for s in l]))
+        print (l.strip ())
+    ## print as html table
+    with open ("output.html", "w", encoding="utf-8") as f:
+        f.write ("<table border=\"1\">\n")
+        for l in lines:
+            f.write ("<tr>\n")
+            for c in l.strip ():
+                f.write (f"<td>{c}</td>\n")
+            f.write ("</tr>\n")
+        f.write ("</table>\n")
 
 
 # ============================================================================
@@ -270,7 +280,7 @@ def example_5():
     n = wiz.dic_add_entries(dictionary)
 
     #set_grid_1 (wiz)
-    wiz.grid_set_size(20, 10)
+    wiz.grid_set_size(10, 8)
     wiz.grid_set_box (0, 0, 'BLACK')
     wiz.grid_set_box (0, 1, 'BLACK')
     wiz.grid_set_box (1, 0, 'BLACK')
