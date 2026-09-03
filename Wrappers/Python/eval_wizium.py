@@ -27,30 +27,6 @@ def draw (lines: list[str], workdir: str):
 
 
 # ============================================================================
-def set_grid_1 (wiz: Wizium):
-    """Set the grid skeleton with a pattern of black boxes
-
-    wiz     Wizium instance"""
-# ============================================================================
-
-    tx = [0, 2, 3]
-
-    wiz.grid_set_size (11,11)
-    wiz.grid_set_box (5, 5, 'BLACK')
-
-    for i in range (3):
-        wiz.grid_set_box (tx [i], 5-tx [i], 'BLACK')
-        wiz.grid_set_box (5+tx [i], tx [i], 'BLACK')
-        wiz.grid_set_box (10-tx [i], 5+tx [i], 'BLACK')
-        wiz.grid_set_box (5-tx [i], 10-tx [i], 'BLACK')
-
-    wiz.grid_set_box (5, 1, 'BLACK')
-    wiz.grid_set_box (5, 9, 'BLACK')
-    wiz.grid_set_box (0, 0, 'BLACK')
-
-
-
-# ============================================================================
 def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int = 0, black_mode: str = 'DIAG'):
     """Solve the grid
 
