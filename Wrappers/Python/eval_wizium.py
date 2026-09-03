@@ -1,6 +1,5 @@
 import argparse
 import os
-import re
 import random
 import time
 import functools
@@ -30,7 +29,7 @@ def draw (lines: list[str]):
 
 
 # ============================================================================
-def set_grid_1 (wiz):
+def set_grid_1 (wiz: Wizium):
     """Set the grid skeleton with a pattern of black boxes
 
     wiz     Wizium instance"""
@@ -110,7 +109,7 @@ def run():
 
     # Load dictionary
     wiz.dic_clear()
-    n = wiz.dic_add_entries(dictionary)
+    wiz.dic_add_entries(dictionary)
 
     #set_grid_1 (wiz)
     wiz.grid_set_size(10, 8)
