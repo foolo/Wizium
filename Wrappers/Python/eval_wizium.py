@@ -7,7 +7,7 @@ from libWizium import Wizium
 PATH = './../../Binaries/Linux/libWizium.so'
 
 # ============================================================================
-def draw (lines: list[str]):
+def draw (lines: list[str], workdir: str):
     """Draw the grid content, with a very simple formatting
 
     wiz     Wizium instance"""
@@ -16,7 +16,7 @@ def draw (lines: list[str]):
     for l in lines:
         print (l.strip ())
     ## print as html table
-    with open ("output.html", "w", encoding="utf-8") as f:
+    with open (os.path.join(workdir, "output.html"), "w", encoding="utf-8") as f:
         f.write ("<table border=\"1\">\n")
         for l in lines:
             f.write ("<tr>\n")
@@ -92,8 +92,10 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
 def run():
     parser = argparse.ArgumentParser()
     parser.add_argument('--dict', type=str, required=True, help='Path to the dictionary file')
+    parser.add_argument('--workdir', type=str, required=True)
     args = parser.parse_args()
     assert isinstance(args.dict, str)
+    assert isinstance(args.workdir, str)
     dictionary = sorted([line.strip() for line in open(args.dict, 'r', encoding='utf-8') if line.strip()])
     ## print first 10 words
     print(f"First 10 words in dictionary: {dictionary[:10]}")
@@ -117,7 +119,7 @@ def run():
     wiz.grid_set_box (1, 0, 'BLACK')
     lines = solve(wiz, max_black=25, heuristic_level=2)
     if lines:
-        draw(lines)
+        draw(lines, args.workdir)
     else:
         print ("No grid content do draw")
 
