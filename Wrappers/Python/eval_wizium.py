@@ -109,7 +109,8 @@ def run():
 
     # Load dictionary
     wiz.dic_clear()
-    wiz.dic_add_entries(dictionary)
+    entries_added = wiz.dic_add_entries(dictionary)
+    print(f"Added {entries_added} entries to the dictionary")
 
     #set_grid_1 (wiz)
     wiz.grid_set_size(10, 8)
