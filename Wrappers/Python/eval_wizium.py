@@ -83,7 +83,7 @@ def load_dictionary (wiz, dico_path):
 
 
 # ============================================================================
-def solve (wiz, max_black=0, heuristic_level=0, seed=0, black_mode='DIAG'):
+def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int = 0, black_mode: str = 'DIAG'):
     """Solve the grid
 
     wiz             Wizium instance
