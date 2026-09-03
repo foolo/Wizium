@@ -191,11 +191,10 @@ class Wizium:
             be = bytearray (entry, self.encoding)
             if len (be) > self._max_word_length:
                 skip += 1
-                print ("Skip " + entry)
                 continue
 
             ctab [(idx-skip)*m : (idx-skip)*m + len (be)] = be
-
+        print(f"Skipped {skip} entries due to length exceeding max_word_length of {self._max_word_length}")
         instance = ctypes.c_ulonglong (self._instance)
         (api, proto) = self._api ["DIC_AddEntries"]
         return api (instance, ctab, len (entries) - skip)
