@@ -172,7 +172,7 @@ class Wizium:
 
 
     # ============================================================================
-    def dic_add_entries (self, entries):
+    def dic_add_entries (self, entries: list[str]) -> int:
         """Add entries to the dictionary
 
         entries:        List of strings (must only contain characters from the alphabet)
@@ -299,7 +299,7 @@ class Wizium:
 
 
     # ============================================================================
-    def grid_set_box (self, x, y, type):
+    def grid_set_box (self, x: int, y: int, type: str):
         """Set the type of box at a given grid coordinate"""
     # ============================================================================
 
