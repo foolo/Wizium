@@ -16,6 +16,9 @@ def draw (wiz: Wizium):
     wiz     Wizium instance"""
 # ============================================================================
     lines = wiz.grid_read ()
+    if not lines:
+        print ("draw(): No grid content")
+        return
     print (f"type(lines): {type(lines)}")
     for l in lines:
         print (l.strip ())

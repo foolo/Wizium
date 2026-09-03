@@ -287,7 +287,7 @@ class Wizium:
 
 
     # ============================================================================
-    def grid_set_size (self, width, height):
+    def grid_set_size (self, width: int, height: int):
         """Set the grid size. Content can be lost when shrinking."""
     # ============================================================================
 
