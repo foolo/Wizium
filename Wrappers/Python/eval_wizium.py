@@ -10,15 +10,11 @@ from libWizium import Wizium
 PATH = './../../Binaries/Linux/libWizium.so'
 
 # ============================================================================
-def draw (wiz: Wizium):
+def draw (lines: list[str]):
     """Draw the grid content, with a very simple formatting
 
     wiz     Wizium instance"""
 # ============================================================================
-    lines = wiz.grid_read ()
-    if not lines:
-        print ("draw(): No grid content")
-        return
     print (f"type(lines): {type(lines)}")
     for l in lines:
         print (l.strip ())
@@ -103,7 +99,7 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
     while True:
         status = wiz.solver_step (max_time_ms=500)
 
-        draw (wiz)
+        lines = wiz.grid_read()
         print (status)
 
         if status.fillRate == 100:
@@ -118,6 +114,7 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
 
     t_end = time.time ()
     print ("Compute time: {:.01f}s".format (t_end-t_start))
+    return lines
 
 
 def run():
@@ -145,7 +142,12 @@ def run():
     wiz.grid_set_box (0, 0, 'BLACK')
     wiz.grid_set_box (0, 1, 'BLACK')
     wiz.grid_set_box (1, 0, 'BLACK')
-    solve(wiz, max_black=25, heuristic_level=2)
+    lines = solve(wiz, max_black=25, heuristic_level=2)
+    if lines:
+        draw(lines)
+    else:
+        print ("No grid content do draw")
+
 
 
 
