@@ -6,12 +6,7 @@ from libWizium import Wizium
 
 PATH = './../../Binaries/Linux/libWizium.so'
 
-# ============================================================================
 def draw (lines: list[str], workdir: str):
-    """Draw the grid content, with a very simple formatting
-
-    wiz     Wizium instance"""
-# ============================================================================
     print (f"type(lines): {type(lines)}")
     for l in lines:
         print (l.strip ())
@@ -26,7 +21,6 @@ def draw (lines: list[str], workdir: str):
         f.write ("</table>\n")
 
 
-# ============================================================================
 def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int = 0, black_mode: str = 'DIAG'):
     """Solve the grid
 
@@ -35,7 +29,6 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
     heuristic_level Heuristic level (0 if deactivated)
     seed            Random Number Generator seed (0: take at random)
     """
-# ============================================================================
 
     if not seed: seed = random.randint(1, 1000000)
 
@@ -98,9 +91,6 @@ def run():
         draw(lines, args.workdir)
     else:
         print ("No grid content do draw")
-
-
-
 
 
 if __name__ == "__main__":
