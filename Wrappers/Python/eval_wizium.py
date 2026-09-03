@@ -2,8 +2,6 @@ import argparse
 import os
 import random
 import time
-import functools
-import operator
 from libWizium import Wizium
 
 PATH = './../../Binaries/Linux/libWizium.so'
