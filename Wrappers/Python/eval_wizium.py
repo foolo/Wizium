@@ -22,7 +22,10 @@ def draw (lines: list[str], workdir: str):
         for l in lines:
             f.write ("<tr>\n")
             for c in l.strip ():
-                f.write (f"<td>{c}</td>\n")
+                if c == '#':
+                    f.write ("<td style=\"background-color: #aaa;\"></td>\n")
+                else:
+                    f.write (f"<td>{c}</td>\n")
             f.write ("</tr>\n")
         f.write ("</table>\n")
 
