@@ -54,27 +54,6 @@ def set_grid_1 (wiz):
 
 
 # ============================================================================
-def set_grid_2 (wiz):
-    """Set the grid as a rectangular area with a hole at the center
-
-    wiz     Wizium instance"""
-# ============================================================================
-
-    # Grid size
-    wiz.grid_set_size (17,15)
-
-    # Hole
-    for i in range (5):
-        for j in range (5):
-            wiz.grid_set_box (6+i, 5+j, 'VOID')
-
-    # Place some words on the grid
-    wiz.grid_write (0,0, 'CONSTRAINT', 'H', add_block=True)
-    wiz.grid_write (16,5, 'CONSTRAINT', 'V', add_block=True)
-    wiz.grid_set_box (16, 4, 'BLACK')
-
-
-# ============================================================================
 def load_dictionary (wiz, dico_path):
     """Load the dictionary content from a file
 
