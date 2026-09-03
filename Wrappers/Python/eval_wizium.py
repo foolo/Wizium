@@ -52,31 +52,6 @@ def set_grid_1 (wiz):
     wiz.grid_set_box (0, 0, 'BLACK')
 
 
-# ============================================================================
-def load_dictionary (wiz, dict_path):
-    """Load the dictionary content from a file
-
-    wiz         Wizium instance
-    dict_path   Path to the dictionary to load
-    """
-# ============================================================================
-
-    # Read file content
-    with open (dict_path, 'r') as f:
-        words = f.readlines ()
-
-    # Remove what is not a letter, if any
-    words = [re.sub('[^a-zA-Z]+', '', s) for s in words]
-
-    # Load dictionary
-    wiz.dic_clear ()
-    n = wiz.dic_add_entries (words)
-
-    print ("Number of words: ")
-    print (" - in file: ", len (words))
-    print (" - added: ", n)
-    print (" - final: ", wiz.dic_gen_num_words ())
-
 
 # ============================================================================
 def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int = 0, black_mode: str = 'DIAG'):
