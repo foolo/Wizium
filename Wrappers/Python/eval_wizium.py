@@ -1,5 +1,6 @@
 import argparse
 import os
+from pathlib import Path
 import random
 import time
 from libWizium import Wizium
@@ -58,13 +59,39 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
     return lines
 
 
+def load_grid(grid_path: Path, wiz: Wizium):
+    if not grid_path.exists():
+        raise FileNotFoundError(f"Grid file '{grid_path}' not found.")
+    with open(grid_path, 'r', encoding='utf-8') as f:
+        lines = [line.strip() for line in f]
+    if not lines:
+        raise ValueError(f"Grid file '{grid_path}' is empty.")
+
+    width = len(lines[0])
+    height = len(lines)
+    wiz.grid_set_size(width, height)
+
+    for y_coord, line in enumerate(lines):
+        if len(line) != width:
+            raise ValueError(f"All lines in the grid file must have the same length. Found a line with length {len(line)} instead of {width}.")
+        for x_coord, char in enumerate(line):
+            if char == '#':
+                wiz.grid_set_box(x_coord, y_coord, 'BLACK')
+            elif char == '.':
+                pass
+            else:
+                raise ValueError(f"Invalid character '{char}' in grid file. Only '#' and '.' are allowed.")
+
+
 def run():
     parser = argparse.ArgumentParser()
     parser.add_argument('--dict', type=str, required=True, help='Path to the dictionary file')
     parser.add_argument('--workdir', type=str, required=True)
+    parser.add_argument('--grid', type=str, help='Path to grid file')
     args = parser.parse_args()
     assert isinstance(args.dict, str)
     assert isinstance(args.workdir, str)
+    assert isinstance(args.grid, str | None)
     dictionary = sorted([line.strip() for line in open(args.dict, 'r', encoding='utf-8') if line.strip()])
     ## print first 10 words
     print(f"First 10 words in dictionary: {dictionary[:10]}")
@@ -81,11 +108,10 @@ def run():
     entries_added = wiz.dic_add_entries(dictionary)
     print(f"Added {entries_added} entries to the dictionary")
 
-    #set_grid_1 (wiz)
-    wiz.grid_set_size(10, 8)
-    wiz.grid_set_box (0, 0, 'BLACK')
-    wiz.grid_set_box (0, 1, 'BLACK')
-    wiz.grid_set_box (1, 0, 'BLACK')
+    if args.grid:
+        print(f"Loading grid from file: {args.grid}")
+        load_grid(Path(args.grid), wiz)
+
     lines = solve(wiz, max_black=25, heuristic_level=2)
     if lines:
         draw(lines, args.workdir)
