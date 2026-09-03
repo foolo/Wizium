@@ -100,7 +100,7 @@ def run():
     ## print first 10 words
     print(f"First 10 words in dictionary: {dictionary[:10]}")
 
-    alphabet = "".join(sorted(functools.reduce(operator.or_, map(set, dictionary))))
+    alphabet = "".join(sorted({ch for word in dictionary for ch in word}))
 
     print(f"Dictionary with {len(dictionary)} words uses alphabet '{alphabet}'")
 
