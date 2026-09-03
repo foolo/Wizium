@@ -13,7 +13,12 @@ def draw (lines: list[str], workdir: str):
         print (l.strip ())
     ## print as html table
     with open (os.path.join(workdir, "output.html"), "w", encoding="utf-8") as f:
-        f.write ("<table border=\"1\">\n")
+        f.write ("<style>\n")
+        f.write ("table { border-collapse: collapse; table-layout: fixed; }\n")
+        f.write ("table, td { border: 1px solid black; }\n")
+        f.write ("td { width: 28px; min-width: 28px; max-width: 28px; height: 28px; min-height: 28px; max-height: 28px; padding: 0; box-sizing: border-box; text-align: center; vertical-align: middle; line-height: 28px; }\n")
+        f.write ("</style>\n")
+        f.write ("<table>\n")
         for l in lines:
             f.write ("<tr>\n")
             for c in l.strip ():
