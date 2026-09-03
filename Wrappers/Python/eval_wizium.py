@@ -11,7 +11,7 @@ PATH = './../../Binaries/Linux/libWizium.so'
 
 # ============================================================================
 def draw (wiz: Wizium):
-    """Draw the grid content, with a very simple formating
+    """Draw the grid content, with a very simple formatting
 
     wiz     Wizium instance"""
 # ============================================================================
@@ -57,16 +57,16 @@ def set_grid_1 (wiz):
 
 
 # ============================================================================
-def load_dictionary (wiz, dico_path):
+def load_dictionary (wiz, dict_path):
     """Load the dictionary content from a file
 
     wiz         Wizium instance
-    dico_path   Path to the dictionary to load
+    dict_path   Path to the dictionary to load
     """
 # ============================================================================
 
     # Read file content
-    with open (dico_path, 'r') as f:
+    with open (dict_path, 'r') as f:
         words = f.readlines ()
 
     # Remove what is not a letter, if any
@@ -97,7 +97,7 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
 
     # Configure the solver
     wiz.solver_start (seed=seed, black_mode=black_mode, max_black=max_black, heuristic_level=heuristic_level)
-    tstart = time.time ()
+    t_start = time.time ()
 
     # Solve with steps of 500ms max, in order to draw the grid content evolution
     while True:
@@ -116,8 +116,8 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
     # Ensure to release grid content
     wiz.solver_stop ()
 
-    tend = time.time ()
-    print ("Compute time: {:.01f}s".format (tend-tstart))
+    t_end = time.time ()
+    print ("Compute time: {:.01f}s".format (t_end-t_start))
 
 
 def run():
