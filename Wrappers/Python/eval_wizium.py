@@ -7,6 +7,24 @@ from libWizium import Wizium
 
 PATH = './../../Binaries/Linux/libWizium.so'
 
+def load_dictionary_words(dict_path: str, allowed_chars: set[str]) -> list[str]:
+    words: list[str] = []
+    with open(dict_path, 'r', encoding='utf-8') as f:
+        for raw_line in f:
+            line = raw_line.strip()
+            if not line:
+                continue
+            # Support optional data after a TAB: "word\tArbitrary text".
+            word = line.split('\t', 1)[0].strip()
+            if word:
+                up = word.upper()
+                if all(ch in allowed_chars for ch in up):
+                    words.append(up)
+                else:
+                    print(f"Skip '{word}', character(s) not in allowed alphabet")
+    return words
+
+
 def draw (lines: list[str], workdir: str):
     print (f"type(lines): {type(lines)}")
     for l in lines:
@@ -94,17 +112,19 @@ def load_grid(grid_path: Path, wiz: Wizium):
 def run():
     parser = argparse.ArgumentParser()
     parser.add_argument('--dict', type=str, required=True, help='Path to the dictionary file')
+    parser.add_argument('--alphabet', type=str, required=True, help='Alphabet string used to filter dictionary words')
     parser.add_argument('--workdir', type=str, required=True)
     parser.add_argument('--grid', type=str, help='Path to grid file')
     args = parser.parse_args()
     assert isinstance(args.dict, str)
+    assert isinstance(args.alphabet, str)
     assert isinstance(args.workdir, str)
     assert isinstance(args.grid, str | None)
-    dictionary = sorted([line.strip() for line in open(args.dict, 'r', encoding='utf-8') if line.strip()])
+    alphabet = ''.join(ch for ch in args.alphabet.upper() if not ch.isspace())
+    allowed_chars = set(alphabet)
+    dictionary = sorted(load_dictionary_words(args.dict, allowed_chars))
     ## print first 10 words
     print(f"First 10 words in dictionary: {dictionary[:10]}")
-
-    alphabet = "".join(sorted({ch for word in dictionary for ch in word}))
 
     print(f"Dictionary with {len(dictionary)} words uses alphabet '{alphabet}'")
 
