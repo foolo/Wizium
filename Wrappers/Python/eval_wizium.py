@@ -125,7 +125,10 @@ def run():
     allowed_chars = set(alphabet)
     logfile_path = os.path.join(args.workdir, "run.log")
     with open(logfile_path, 'w', encoding='utf-8') as logfile:
-        dictionary = sorted(load_dictionary_words(args.dict, allowed_chars, logfile))
+        loaded_words = load_dictionary_words(args.dict, allowed_chars, logfile)
+    print(f"Loaded {len(loaded_words)} words from dictionary file '{args.dict}'")
+    dictionary = sorted(set(loaded_words))
+    print(f"Removed duplicates, resulting in {len(dictionary)} unique words")
     ## print first 10 words
     print(f"First 10 words in dictionary: {dictionary[:10]}")
     print(f"Log file: {logfile_path}")
