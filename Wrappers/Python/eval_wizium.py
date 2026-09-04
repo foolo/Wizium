@@ -3,11 +3,12 @@ import os
 from pathlib import Path
 import random
 import time
+from typing import TextIO
 from libWizium import Wizium
 
 PATH = './../../Binaries/Linux/libWizium.so'
 
-def load_dictionary_words(dict_path: str, allowed_chars: set[str]) -> list[str]:
+def load_dictionary_words(dict_path: str, allowed_chars: set[str], logfile: TextIO) -> list[str]:
     words: list[str] = []
     with open(dict_path, 'r', encoding='utf-8') as f:
         for raw_line in f:
@@ -21,7 +22,7 @@ def load_dictionary_words(dict_path: str, allowed_chars: set[str]) -> list[str]:
                 if all(ch in allowed_chars for ch in up):
                     words.append(up)
                 else:
-                    print(f"Skip '{word}', character(s) not in allowed alphabet")
+                    logfile.write(f"Skip '{word}', character(s) not in allowed alphabet\n")
     return words
 
 
@@ -122,9 +123,12 @@ def run():
     assert isinstance(args.grid, str | None)
     alphabet = ''.join(ch for ch in args.alphabet.upper() if not ch.isspace())
     allowed_chars = set(alphabet)
-    dictionary = sorted(load_dictionary_words(args.dict, allowed_chars))
+    logfile_path = os.path.join(args.workdir, "run.log")
+    with open(logfile_path, 'w', encoding='utf-8') as logfile:
+        dictionary = sorted(load_dictionary_words(args.dict, allowed_chars, logfile))
     ## print first 10 words
     print(f"First 10 words in dictionary: {dictionary[:10]}")
+    print(f"Log file: {logfile_path}")
 
     print(f"Dictionary with {len(dictionary)} words uses alphabet '{alphabet}'")
 
