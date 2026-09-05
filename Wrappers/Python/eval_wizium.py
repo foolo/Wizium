@@ -29,7 +29,7 @@ def load_dictionary_words(dict_path: str, allowed_chars: set[str], logfile: Text
 def draw (lines: list[str], workdir: str):
     print (f"type(lines): {type(lines)}")
     for l in lines:
-        print (l.strip ())
+        print (' '.join (l.strip ()))
     ## print as html table
     with open (os.path.join(workdir, "output.html"), "w", encoding="utf-8") as f:
         f.write ("<style>\n")
