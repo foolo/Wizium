@@ -69,13 +69,13 @@ def solve (wiz: Wizium, max_black: int = 0, heuristic_level: int = 0, seed: int 
         status = wiz.solver_step (max_time_ms=500)
 
         lines = wiz.grid_read()
-        print (status)
+        print (f"Counter: {status.counter}, Fill rate:{status.fillRate}\r", end='', flush=True)
 
         if status.fillRate == 100:
-            print ("SUCCESS !")
+            print ("\nSUCCESS !")
             break
         if status.fillRate == 0:
-            print ("FAILED !")
+            print ("\nFAILED !")
             break
 
     # Ensure to release grid content
