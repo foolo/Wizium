@@ -105,7 +105,7 @@ def load_grid(grid_path: Path, wiz: Wizium):
         if len(line) != width:
             raise ValueError(f"All lines in the grid file must have the same length. Found a line with length {len(line)} instead of {width}.")
         for x_coord, char in enumerate(line):
-            if char == '#':
+            if char == '#' or char == '%':
                 wiz.grid_set_box(x_coord, y_coord, 'BLACK')
             elif char == '.':
                 pass
