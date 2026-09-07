@@ -30,6 +30,9 @@ def draw (lines: list[str], workdir: str):
     print (f"type(lines): {type(lines)}")
     for l in lines:
         print (' '.join (l.strip ()))
+    with open (os.path.join(workdir, "output.txt"), "w", encoding="utf-8") as f:
+        for l in lines:
+            f.write(l.strip() + "\n")
     ## print as html table
     with open (os.path.join(workdir, "output.html"), "w", encoding="utf-8") as f:
         f.write ("<style>\n")
